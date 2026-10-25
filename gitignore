@@ -1,0 +1,16 @@
+# Секреты
+.env
+
+# Локальная база с историей диалогов
+data/
+*.db
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# IDE
+.idea/
+.vscode/
