@@ -41,7 +41,7 @@ The bot works **out of the box**: the only thing you need is a Telegram bot toke
 **1. Clone the repository**
 
 ```bash
-git clone https://github.com/<your-username>/ai-sales-manager-bot.git
+git clone https://github.com/<Urbanexxx>/ai-sales-manager-bot.git
 cd ai-sales-manager-bot
 ```
 
