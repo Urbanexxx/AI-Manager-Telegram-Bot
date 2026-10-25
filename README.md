@@ -1,6 +1,6 @@
 # 🤖 AI-Manager Telegram Bot Terminal
 
-![Bot Preview](./preview.gif)
+![Bot Preview](./preview.gif.gif)
 
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue?logo=python&logoColor=white)
 ![aiogram](https://img.shields.io/badge/aiogram-3.x-2CA5E0?logo=telegram&logoColor=white)
