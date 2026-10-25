@@ -25,8 +25,8 @@ async def on_startup(bot: Bot) -> None:
 
 async def main() -> None:
    bot = Bot(token=settings.telegram_token)
-    dp = Dispatcher()
-    dp.include_router(router)
+   dp = Dispatcher()
+   dp.include_router(router)
     
     # Регистрируем вебхук на старте
     async def on_startup_webhook(bot: Bot) -> None:
