@@ -48,3 +48,12 @@ async def main() -> None:
         await web._run_app(app, host="0.0.0.0", port=port)
     finally:
         await bot.session.close()
+
+if name == "main":
+    import logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
+    )
+    import asyncio
+    asyncio.run(main())
