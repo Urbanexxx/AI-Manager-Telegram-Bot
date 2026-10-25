@@ -24,23 +24,27 @@ async def on_startup(bot: Bot) -> None:
 
 
 async def main() -> None:
-    bot = Bot(token=settings.telegram_token)
+   bot = Bot(token=settings.telegram_token)
     dp = Dispatcher()
     dp.include_router(router)
-    dp.startup.register(on_startup)
+    
+    # Регистрируем вебхук на старте
+    async def on_startup_webhook(bot: Bot) -> None:
+        await on_startup(bot) # Вызовет вашу родную функцию (БД и логи)
+        render_url = os.getenv("RENDER_EXTERNAL_URL")
+        await bot.set_webhook(f"{render_url}/webhook", drop_pending_updates=True)
 
+    dp.startup.register(on_startup_webhook)
+    
+    # Настраиваем веб-сервер для приема вебхуков от Telegram
+    app = web.Application()
+    webhook_requests_handler = SimpleRequestHandler(dispatcher=dp, bot=bot)
+    webhook_requests_handler.register(app, path="/webhook")
+    setup_application(app, dp, bot=bot)
+    
+    port = int(os.getenv("PORT", 8080))
+    
     try:
-        await dp.start_polling(bot)
+        await web._run_app(app, host="0.0.0.0", port=port)
     finally:
         await bot.session.close()
-
-
-if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
-    )
-    try:
-        asyncio.run(main())
-    except (KeyboardInterrupt, SystemExit):
-        logger.info("Бот остановлен")
