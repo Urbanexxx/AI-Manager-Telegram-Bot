@@ -5,9 +5,18 @@ from aiohttp import web
 from aiogram import Bot, Dispatcher
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 
-# Предполагаем, что ваши локальные файлы лежат в той же папке
+from handlers import router
 from config import settings
-from handlers import router, on_startup
+from ai_integration import load_knowledge_base
+from database import init_db
+
+async def on_startup(bot: Bot) -> None:
+    """Выполняется один раз при старте: готовим БД и базу знаний."""
+    await init_db()  # создаёт таблицу messages, если её ещё нет
+    load_knowledge_base()  # читает knowledge_base.txt в память и логирует режим
+    
+    me = await bot.get_me()
+    logging.info(f"Бот @{me.username} запущен в облаке Render!")
 
 async def on_startup_webhook(bot: Bot) -> None:
     await on_startup(bot)
